@@ -1,10 +1,12 @@
 const webpack = require('webpack')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
+let isDev = process.env.NODE_ENV
 
-let isDev = process.env.NODE_ENV;
-
-module.exports = {
+let config = {
   mode: isDev,
   entry: path.join(__dirname, './src/index.js'),
   output: {
@@ -16,34 +18,52 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader'
-      },
-      {
+      }, {
         test: /\.css$/,
-        use: [
-            'style-loader',
-            'css-loader'
-        ]
-      },
-      {
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
+      }, {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 1024,
-              name:'[name]-aaa.[ext]'
+              name: '[name]-[hash:20].[ext]',
+              outputPath: 'imgs/'
             }
           }
         ]
-      },
-      {
+      }, {
         test: /\.styl$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'stylus-loader'
-        ]
+        use: ["style-loader", "css-loader", "stylus-loader"]
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      minify: {
+        removeAttributeQuotes: true //去掉html中的引号
+      },
+      hash: true
+    }),
+    new MiniCssExtractPlugin({filename: "[name].css", chunkFilename: "[id].css"})
+  ]
 }
+
+if (isDev === 'development') {
+  config.devServer = {
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    port: 9000,
+    host: "0.0.0.0"
+  }
+  config.plugins.push(new webpack.HotModuleReplacementPlugin({}))
+}else {
+  config.plugins.push(
+    new CleanWebpackPlugin(['dist']),
+
+  )
+}
+
+module.exports = config

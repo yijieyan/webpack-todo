@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
   "repository": {
@@ -21,15 +22,21 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.0.7",
+    "mini-css-extract-plugin": "^0.2.0",
     "style-loader": "^0.20.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "url-loader": "^1.0.1",
     "vue-loader": "^14.2.1",
+    "vue-template-compiler": "^2.5.16",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12"
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^3.1.1"
   }
 }
