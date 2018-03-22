@@ -56,9 +56,10 @@ if (isDev === 'development') {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
     port: 9000,
-    host: "0.0.0.0"
+    host: "0.0.0.0",
+    hot:true
   }
-  config.plugins.push(new webpack.HotModuleReplacementPlugin({}))
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }else {
   config.plugins.push(
     new CleanWebpackPlugin(['dist']),

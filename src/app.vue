@@ -9,7 +9,7 @@ export default {
   name: 'app',
   data() {
     return {
-      text: '1231231122312'
+      text: '12131312'
     }
   }
 }
