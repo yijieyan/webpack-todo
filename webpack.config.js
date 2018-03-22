@@ -57,7 +57,8 @@ if (isDev === 'development') {
     compress: true,
     port: 9000,
     host: "0.0.0.0",
-    hot:true
+    hot:true,
+    historyApiFallback: true
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }else {
