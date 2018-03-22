@@ -1,18 +1,11 @@
 <template lang="html">
   <div>
-    <router-view></router-view>
-    {{text}}
+    this is a login page
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data() {
-    return {
-      text: '12131312'
-    }
-  }
 }
 </script>
 

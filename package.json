@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/yijieyan/webpack-todo#readme",
   "dependencies": {
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
