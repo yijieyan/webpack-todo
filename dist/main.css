@@ -1,5 +1,7 @@
-body {
-  color: blue;
-  background: url(imgs/bg-d0476aabbdb449a4fa8b.jpg);
+.fade-enter-active, .fade-leave-active {
+  transition: all  0.5 ease;
+}
+.fade-enter, .fade-leave {
+  opacity: 0;
 }
 

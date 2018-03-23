@@ -1,7 +1,10 @@
 <template lang="html">
   <div>
-    <router-view></router-view>
-    {{text}}
+      <router-link to="/login">login</router-link>
+      <router-link to="/app/123">app</router-link>
+      <transition name="fade">
+          <router-view></router-view>
+      </transition>
   </div>
 </template>
 
@@ -10,7 +13,7 @@ export default {
   name: 'app',
   data() {
     return {
-      text: '12131312'
+
     }
   }
 }

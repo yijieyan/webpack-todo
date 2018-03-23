@@ -1,10 +1,11 @@
 import VueRouter from 'vue-router'
 import routes from './router'
 
+
 export default() => {
-  return new VueRouter({
+  const router = new VueRouter({
     routes,
-    mode: 'history',
+    // mode: 'history',
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
         return savedPosition
@@ -14,4 +15,16 @@ export default() => {
     },
     fallback: true
   })
+
+  router.beforeEach((to, from, next) => {
+    // console.log(to, from )
+    if (to.fullPath === '/') {
+        next('/login')
+    }else {
+      next()
+    }
+
+  })
+
+  return router
 }

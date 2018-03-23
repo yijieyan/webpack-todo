@@ -11,7 +11,8 @@ let config = {
   entry: path.join(__dirname, './src/index.js'),
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    // publicPath: './'
   },
   module: {
     rules: [
@@ -34,8 +35,8 @@ let config = {
           }
         ]
       }, {
-        test: /\.styl$/,
-        use: ["style-loader", "css-loader", "stylus-loader"]
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
   },
@@ -62,6 +63,11 @@ if (isDev === 'development') {
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }else {
+  config.output = {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: './'
+  },
   config.plugins.push(
     new CleanWebpackPlugin(['dist']),
 
