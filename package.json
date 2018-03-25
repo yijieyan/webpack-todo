@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --open",
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
@@ -17,13 +18,59 @@
   "bugs": {
     "url": "https://github.com/yijieyan/webpack-todo/issues"
   },
+  "eslintConfig": {
+    "root": true,
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "extends": [
+      "mysticatea",
+      "mysticatea/modules",
+      "plugin:vue/recommended"
+    ],
+    "plugins": [
+      "node"
+    ],
+    "env": {
+      "browser": false
+    },
+    "globals": {
+      "applicationCache": false,
+      "atob": false,
+      "btoa": false,
+      "console": false,
+      "document": false,
+      "location": false,
+      "window": false
+    },
+    "rules": {
+      "node/no-extraneous-import": "error",
+      "node/no-missing-import": "error",
+      "node/no-unpublished-import": "error",
+      "vue/html-indent": [
+        "error",
+        4
+      ],
+      "vue/max-attributes-per-line": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "webpack.config.js",
+    "src/router/*.js",
+    "src/store/*",
+    "src/index.js"
+  ],
   "homepage": "https://github.com/yijieyan/webpack-todo#readme",
   "dependencies": {
     "vue": "^2.5.16",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-stage-3": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
@@ -41,6 +88,10 @@
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
-    "webpack-dev-server": "^3.1.1"
+    "webpack-dev-server": "^3.1.1",
+    "eslint": "^4.13.0",
+    "eslint-config-mysticatea": "^12.0.0",
+    "eslint-plugin-vue": "^4.0.0-beta.2",
+    "vue-eslint-parser": "^2.0.1-beta.2"
   }
 }

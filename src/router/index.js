@@ -1,6 +1,5 @@
-import VueRouter from 'vue-router'
-import routes from './router'
-
+import VueRouter from "vue-router"
+import routes from "./router"
 
 export default() => {
   const router = new VueRouter({
@@ -19,8 +18,8 @@ export default() => {
   router.beforeEach((to, from, next) => {
     // console.log(to, from )
     if (to.fullPath === '/') {
-        next('/login')
-    }else {
+      next('/login')
+    } else {
       next()
     }
 
