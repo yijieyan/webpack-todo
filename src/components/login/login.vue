@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div :class="$style.container">
     this is a login page
   </div>
 </template>
@@ -33,4 +33,9 @@ export default {
 </script>
 
 <style lang="scss" module>
+  .container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 </style>

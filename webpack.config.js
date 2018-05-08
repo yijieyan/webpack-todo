@@ -11,8 +11,7 @@ let config = {
   entry: path.join(__dirname, './src/index.js'),
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    // publicPath: './'
+    filename: 'bundle.js'
   },
   module: {
     rules: [
@@ -20,23 +19,17 @@ let config = {
         test: /\.vue$/,
         loader: 'vue-loader'
       }, {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
-      }, {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 1024,
-              name: '[name]-[hash:20].[ext]',
+              name: '[name]-[hash:8].[ext]',
               outputPath: 'imgs/'
             }
           }
         ]
-      }, {
-        test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
   },
@@ -48,7 +41,11 @@ let config = {
       },
       hash: true
     }),
-    new MiniCssExtractPlugin({filename: "[name].css", chunkFilename: "[id].css"})
+    new webpack.DefinePlugin({
+      production: isDev === 'production'
+        ? JSON.stringify(true)
+        : JSON.stringify(false)
+    })
   ]
 }
 
@@ -58,22 +55,61 @@ if (isDev === 'development') {
     compress: true,
     port: 9000,
     host: "0.0.0.0",
-    hot:true,
+    hot: true,
     historyApiFallback: true,
-    clientLogLevel: "none",
-    quiet: true
+    // clientLogLevel: "none",
+    // quiet: true
   }
+  config.module.rules.push({
+    test: /\.css$/,
+    use: ["style-loader", "css-loader"]
+  });
+
+  config.module.rules.push({
+    test: /\.scss$/,
+    use: ["style-loader", "css-loader", "sass-loader"]
+  });
+
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
-}else {
+} else {
+  config.entry = {
+    vendor: [
+      "vue", "vue-router", "vuex"
+    ],
+    app: path.join(__dirname, './src/index.js')
+  };
+
   config.output = {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[chunkHash].js',
     publicPath: './'
   },
-  config.plugins.push(
-    new CleanWebpackPlugin(['dist']),
 
-  )
+  config.module.rules.push({
+    test: /\.css$/,
+    use: [MiniCssExtractPlugin.loader, "css-loader"]
+  }, {
+    test: /\.scss$/,
+    use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+  });
+  config.optimization = {
+    runtimeChunk: {
+      name: "manifest"
+    },
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all"
+        }
+      }
+    }
+  }
+  config.plugins.push(new CleanWebpackPlugin(['dist']),
+  // new webpack.optimize.CommonsChunkPlugin({name: "vendor", minChunks: Infinity}),
+  new MiniCssExtractPlugin({filename: "[hash:10].css", chunkFilename: "[id].css"}));
+
 }
 
 module.exports = config
